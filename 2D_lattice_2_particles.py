@@ -49,14 +49,14 @@ class Particles():
         while (self.start_pos_2 == self.start_pos_1).all():
             self.start_pos_2 = np.random.randint(low = 0, high = 10, size = 2)
         # selecting the potential to be applied to the system
-        self.potential = input('Select the potential: 1 - standard, 2 - LJ, 3 - Coulomb')
+        self.potential = input('Select the potential: 1 - standard, 2 - LJ, 3 - Coulomb: ')
 
         self.start_E = Energy(self.start_pos_1, self.start_pos_2, self.potential)
         #saving the treks to follow them later on
         self.coordinate_trek_1 = []
         self.coordinate_trek_2 = []
         self.Energy_trek = []
-        self.Temp = float(input('Enter the temperature'))
+        self.Temp = float(input('Enter the temperature: '))
 
 
     def update(self):
@@ -119,7 +119,7 @@ test.update()
 def Average_value(A_arr, E_arr, T):
     E_arr = E_arr[50:]
     A_arr = A_arr[50:]
-    weights = [exp(E/T) for E in E_arr]
+    weights = [exp(-E/T) for E in E_arr]
     weights_sum = sum(weights)
     A_avg = 0
     for i in range(len(A_arr)):
@@ -129,11 +129,12 @@ def Average_value(A_arr, E_arr, T):
 #calculate the entropy of the system   
 def Entropy(E_arr, T):
     E_arr = E_arr[50:]
-    weights = [exp(E/T) for E in E_arr]
+    weights = [exp(-E/T) for E in E_arr]
     S = 0
     for i in weights:
-        S+= -i*log(i)
+        S+= -1*i*np.log(i)
     return S
+
 distance = distance_calculator(test.coordinate_trek_1, test.coordinate_trek_2)
 print('Average energy = ', Average_value(test.Energy_trek, test.Energy_trek, test.Temp))
 print('Average distance = ', Average_value(distance, test.Energy_trek, test.Temp))
