@@ -24,8 +24,8 @@ def Energy(coord_1, coord_2, potential):
         E = 4*epsilon*(np.power((sigma/dist),12) - np.power((sigma/dist),6))
     #Coulomb potential for single-charged particles    
     elif potential == '3':
-        dist_square = (coord_1[0]-coord_2[0])**2+(coord_1[1]-coord_2[1])**2
-        E = -1/dist_square
+        dist = sqrt((coord_1[0]-coord_2[0])**2+(coord_1[1]-coord_2[1])**2)
+        E = -1/dist
     return E
 
 #calculate distance for cordinate trek d = sqrt((x1-x2)^2+(y1-y2)^2)
@@ -119,7 +119,7 @@ test.update()
 def Average_value(A_arr, E_arr, T):
     E_arr = E_arr[50:]
     A_arr = A_arr[50:]
-    weights = [exp(-E/T) for E in E_arr]
+    weights = [exp(-(E-min(E_arr))/T) for E in E_arr]
     weights_sum = sum(weights)
     A_avg = 0
     for i in range(len(A_arr)):
@@ -129,7 +129,7 @@ def Average_value(A_arr, E_arr, T):
 #calculate the entropy of the system   
 def Entropy(E_arr, T):
     E_arr = E_arr[50:]
-    weights = [exp(-E/T) for E in E_arr]
+    weights = [exp(-(E-min(E_arr))/T) for E in E_arr]
     S = 0
     for i in weights:
         S+= -1*i*np.log(i)
@@ -144,7 +144,8 @@ print('Ensemble entropy = ', Entropy(test.Energy_trek, test.Temp))
 fig, axs = plt.subplots(nrows=2, ncols=1)
 
 axs[0].plot(distance, label='distance, T = '+str(test.Temp))
-axs[0].axhline(y = 1, color = 'r', linestyle = '-') 
+axs[0].axhline(y = 1, color = 'r', linestyle = '--') 
+axs[0].axhline(y = sqrt(2), color = 'r', linestyle = '--') 
 axs[0].set_ylim([0, max(distance)+0.5])
 axs[0].legend()
 axs[1].plot(test.Energy_trek, label='Energy, T = '+str(test.Temp), color = 'orange')
