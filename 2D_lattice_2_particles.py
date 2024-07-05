@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import random as rnd
 from math import exp as exp
 from math import log as log
 from math import sqrt as sqrt
