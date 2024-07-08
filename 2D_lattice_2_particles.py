@@ -140,8 +140,9 @@ print('Average energy = ', Average_value(test.Energy_trek, test.Energy_trek, tes
 print('Average distance = ', Average_value(distance, test.Energy_trek, test.Temp))
 print('Ensemble entropy = ', Entropy(test.Energy_trek, test.Temp))
 
+point_numbers = range(10000)
 #plot distance and energy graph along the trek 
-fig, axs = plt.subplots(nrows=2, ncols=1)
+fig, axs = plt.subplots(nrows=3, ncols=1)
 
 axs[0].plot(distance, label='distance, T = '+str(test.Temp))
 axs[0].axhline(y = 1, color = 'r', linestyle = '--') 
@@ -150,5 +151,11 @@ axs[0].set_ylim([0, max(distance)+0.5])
 axs[0].legend()
 axs[1].plot(test.Energy_trek, label='Energy, T = '+str(test.Temp), color = 'orange')
 axs[1].legend()
-
+part_1_x = [i[0] for i in test.coordinate_trek_1]
+part_1_y = [i[1] for i in test.coordinate_trek_1]
+part_2_x = [i[0] for i in test.coordinate_trek_2]
+part_2_y = [i[1] for i in test.coordinate_trek_2]
+axs[2].scatter(part_1_x, part_1_y, c=point_numbers, cmap=plt.cm.Blues)
+axs[2].scatter(part_2_x, part_2_y, c=point_numbers, cmap=plt.cm.Reds)
+axs[2].axis('square')
 plt.show()
