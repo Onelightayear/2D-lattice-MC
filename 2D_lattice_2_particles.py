@@ -151,11 +151,4 @@ axs[0].set_ylim([0, max(distance)+0.5])
 axs[0].legend()
 axs[1].plot(test.Energy_trek, label='Energy, T = '+str(test.Temp), color = 'orange')
 axs[1].legend()
-part_1_x = [i[0] for i in test.coordinate_trek_1]
-part_1_y = [i[1] for i in test.coordinate_trek_1]
-part_2_x = [i[0] for i in test.coordinate_trek_2]
-part_2_y = [i[1] for i in test.coordinate_trek_2]
-axs[2].scatter(part_1_x, part_1_y, c=point_numbers, cmap=plt.cm.Blues)
-axs[2].scatter(part_2_x, part_2_y, c=point_numbers, cmap=plt.cm.Reds)
-axs[2].axis('square')
 plt.show()
